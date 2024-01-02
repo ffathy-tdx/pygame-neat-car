@@ -133,9 +133,15 @@ class Car:
         rotated_rectangle.center = rotated_image.get_rect().center
         rotated_image = rotated_image.subsurface(rotated_rectangle).copy()
         return rotated_image
+    
+def save_best_genome(genomes, filename="best_genome.pkl"):
+    best_genome = max(genomes, key=lambda x: x[1].fitness)
+    with open(filename, "wb") as file:
+        pickle.dump(best_genome[1], file)
 
 
 def run_simulation(genomes, config):
+    best_genome = None
     nets = []
     cars = []
 
@@ -183,7 +189,9 @@ def run_simulation(genomes, config):
                 car.update(game_map)
                 genomes[i][1].fitness += car.get_reward()
 
-
+                # Check if the current car's genome has a higher fitness than the best_genome
+                if best_genome is None or car.get_reward() > best_genome.fitness:
+                    best_genome = genomes[i][1]
         if still_alive == 0:
             # Save the best-performing genome's weights
             best_genome = max(genomes, key=lambda x: x[1].fitness)
@@ -211,6 +219,9 @@ def run_simulation(genomes, config):
 
         pygame.display.flip()
         clock.tick(60)  # 60 FPS
+        # After the simulation loop
+    save_best_genome(genomes, "best_genome.pkl")
+
 
 def save_weights(network, filename):
     weights = []  # List to store weights
@@ -234,3 +245,13 @@ if __name__ == "__main__":
     population.add_reporter(stats)
 
     population.run(run_simulation, 1000)
+
+    for i, car in enumerate(cars):
+        if car.is_alive():
+            still_alive += 1
+            car.update(game_map)
+            genomes[i][1].fitness += car.get_reward()
+            if car.get_reward() > best_genome.fitness:
+                best_genome = genomes[i][1]
+
+    save_best_genome(genomes, "best_genome.pkl")
