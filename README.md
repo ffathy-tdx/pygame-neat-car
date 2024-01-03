@@ -36,7 +36,7 @@ The simulation involves cars with neural networks as their brains. These network
    
 **Saving the Best Performing Model**
 
-During the simulation, the script saves the best-performing genome in a file named best_genome.pkl. This file contains the weights and information needed to reproduce the neural network of the most successful car. You can find this file in the project directory.
+During the simulation, the script saves the best-performing genome in a file named 'best_genome.pkl'. This file contains the weights and information needed to reproduce the neural network of the most successful car. You can find this file in the project directory.
 
 **Customize and Contribute**
 
