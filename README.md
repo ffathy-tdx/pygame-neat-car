@@ -31,8 +31,14 @@ The simulation involves cars with neural networks as their brains. These network
 3. **Run the Simulation:**
    ```bash
    python newcar.py
+   
+   
+**Saving the Best Performing Model**
 
-Customize and Contribute
+During the simulation, the script saves the best-performing genome in a file named best_genome.pkl. This file contains the weights and information needed to reproduce the neural network of the most successful car. You can find this file in the project directory.
+
+**Customize and Contribute**
+
 Feel free to experiment and tweak the parameters in the config.txt file to see how it affects the learning process. If you have ideas for improvements, create a fork, make changes, and submit a pull request.
 
 License
